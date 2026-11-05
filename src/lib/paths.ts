@@ -1,0 +1,15 @@
+export const paths = {
+  home: '/',
+  projects: '/projects/',
+  project: (slug: string) => `/projects/${slug}/`,
+  publications: '/publications/',
+  paper: (slug: string) => `/publications/${slug}/`,
+  demos: '/demos/',
+  demo: (slug: string) => `/demos/${slug}/`,
+  writing: '/writing/',
+  post: (slug: string) => `/writing/${slug}/`,
+  people: '/people/',
+  person: (slug: string) => `/people/${slug}/`,
+  internal: '/internal/',
+  join: '/join/',
+} as const;

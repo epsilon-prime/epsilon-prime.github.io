@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { paths } from '../../lib/paths';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const blogs = posts.filter((p) => p.data.type === 'blog');
+const tutorials = posts.filter((p) => p.data.type === 'tutorial');
+---
+
+<BaseLayout title="Writing" description="Blogs and tutorials from Epsilon Prime.">
+  <h1 class="page-title">Writing</h1>
+  <p class="page-intro">Blogs and tutorials, each linked to related projects, papers, and demos.</p>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Blogs</h2>
+    </div>
+    <div class="stack">
+      {
+        blogs.map((post) => (
+          <a class="list-item" href={paths.post(post.id)}>
+            <span class="eyebrow">blog</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Tutorials</h2>
+    </div>
+    <div class="stack">
+      {
+        tutorials.map((post) => (
+          <a class="list-item" href={paths.post(post.id)}>
+            <span class="eyebrow">tutorial</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  label?: string;
+  ratio?: 'wide' | 'avatar';
+}
+const { label = 'Placeholder image', ratio = 'wide' } = Astro.props;
+---
+
+{
+  ratio === 'avatar' ? (
+    <div class="placeholder-avatar" role="img" aria-label={label} />
+  ) : (
+    <div class="placeholder-media" role="img" aria-label={label}>
+      {label}
+    </div>
+  )
+}

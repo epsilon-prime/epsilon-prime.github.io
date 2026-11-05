@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { paths } from '../../lib/paths';
+
+const projects = (await getCollection('projects')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+
+<BaseLayout title="Projects" description="Research projects at Epsilon Prime.">
+  <h1 class="page-title">Projects</h1>
+  <p class="page-intro">Each project hubs people, repos, papers, demos, and writing.</p>
+  <div class="stack">
+    {
+      projects.map((project) => (
+        <a class="list-item" href={paths.project(project.id)}>
+          <span class="eyebrow">{project.data.status}</span>
+          <h3>{project.data.title}</h3>
+          <p>{project.data.summary}</p>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

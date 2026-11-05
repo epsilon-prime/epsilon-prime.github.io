@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { paths } from '../../lib/paths';
+
+const papers = (await getCollection('papers')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout title="Publications" description="Papers from Epsilon Prime Research.">
+  <h1 class="page-title">Publications</h1>
+  <p class="page-intro">Each paper page links to related projects, demos, and writing on this site.</p>
+  <div class="stack">
+    {
+      papers.map((paper) => (
+        <a class="list-item" href={paths.paper(paper.id)}>
+          <h3>{paper.data.title}</h3>
+          <p class="meta">
+            {paper.data.authors.join(', ')}
+            {paper.data.venue ? ` · ${paper.data.venue}` : ''} · {paper.data.year}
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

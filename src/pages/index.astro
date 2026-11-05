@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlaceholderMedia from '../components/PlaceholderMedia.astro';
+import { paths } from '../lib/paths';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+const papers = (await getCollection('papers')).sort((a, b) => b.data.year - a.data.year).slice(0, 3);
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Epsilon Prime Research" description="AI efficiency research lab — Epsilon Prime Research.">
+  <section class="hero">
+    <p class="hero-kicker">AI efficiency research</p>
+    <h1>Epsilon Prime Research</h1>
+    <p class="hero-lede">
+      We study how to make models cheaper, faster, and leaner — without giving up accuracy. This site is a
+      reviewable boilerplate; every linked page is a placeholder template.
+    </p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href={paths.projects}>View projects</a>
+      <a class="btn btn-ghost" href={paths.join}>Join the lab</a>
+    </div>
+  </section>
+
+  <section class="section grid-2">
+    <div>
+      <PlaceholderMedia label="Placeholder lab / project image" />
+    </div>
+    <div class="stack">
+      <div class="section-head">
+        <h2>Featured project</h2>
+        <a href={paths.projects}>All projects</a>
+      </div>
+      {
+        projects.map((project) => (
+          <a class="list-item" href={paths.project(project.id)}>
+            <span class="eyebrow">{project.data.status}</span>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Latest publications</h2>
+      <a href={paths.publications}>All publications</a>
+    </div>
+    <div class="stack">
+      {
+        papers.map((paper) => (
+          <a class="list-item" href={paths.paper(paper.id)}>
+            <h3>{paper.data.title}</h3>
+            <p class="meta">
+              {paper.data.venue ? `${paper.data.venue} · ` : ''}
+              {paper.data.year}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Writing</h2>
+      <a href={paths.writing}>Blogs & tutorials</a>
+    </div>
+    <div class="grid-3">
+      {
+        posts.map((post) => (
+          <a class="list-item" href={paths.post(post.id)}>
+            <span class="eyebrow">{post.data.type}</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

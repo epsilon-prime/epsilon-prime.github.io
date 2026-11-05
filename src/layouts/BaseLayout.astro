@@ -1,0 +1,45 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Epsilon Prime Research — AI efficiency lab.' } = Astro.props;
+const fullTitle = title === 'Epsilon Prime Research' ? title : `${title} · Epsilon Prime`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/logos/logo-light.png" />
+    <title>{fullTitle}</title>
+    <script is:inline>
+      (function () {
+        const key = 'ep-theme';
+        const stored = localStorage.getItem(key);
+        const theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <Header />
+      <main class="site-main">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

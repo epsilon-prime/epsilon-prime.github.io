@@ -1,0 +1,77 @@
+---
+import { getCollection, getEntries, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { paths } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const projects = await getEntries(post.data.projects);
+const papers = await getEntries(post.data.papers);
+const demos = await getEntries(post.data.demos);
+---
+
+<BaseLayout title={post.data.title} description={post.data.summary}>
+  <p class="eyebrow">{post.data.type}</p>
+  <h1 class="page-title">{post.data.title}</h1>
+  <p class="page-intro meta">
+    {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+  </p>
+  <p class="page-intro">{post.data.summary}</p>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  {
+    projects.length > 0 && (
+      <section class="panel">
+        <h2>Projects</h2>
+        <ul class="rel-list">
+          {projects.map((project) => (
+            <li>
+              <a href={paths.project(project.id)}>{project.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    papers.length > 0 && (
+      <section class="panel">
+        <h2>Papers</h2>
+        <ul class="rel-list">
+          {papers.map((paper) => (
+            <li>
+              <a href={paths.paper(paper.id)}>{paper.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    demos.length > 0 && (
+      <section class="panel">
+        <h2>Demos</h2>
+        <ul class="rel-list">
+          {demos.map((demo) => (
+            <li>
+              <a href={paths.demo(demo.id)}>{demo.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>

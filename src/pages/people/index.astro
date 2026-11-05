@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
+import { paths } from '../../lib/paths';
+
+const people = (await getCollection('people')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="People" description="Members of Epsilon Prime Research.">
+  <h1 class="page-title">People</h1>
+  <p class="page-intro">
+    Lab members and collaborators.
+    <a href={paths.join}>Interested in joining?</a>
+  </p>
+  <div class="grid-3">
+    {
+      people.map((person) => (
+        <a class="list-item" href={paths.person(person.id)}>
+          <PlaceholderMedia ratio="avatar" label={`${person.data.name} photo placeholder`} />
+          <h3>{person.data.name}</h3>
+          <p class="meta">{person.data.role}</p>
+          {person.data.affiliation && <p class="meta">{person.data.affiliation}</p>}
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

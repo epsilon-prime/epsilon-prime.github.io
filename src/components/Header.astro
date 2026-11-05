@@ -1,0 +1,70 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { paths } from '../lib/paths';
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { href: paths.projects, label: 'Projects' },
+  { href: paths.publications, label: 'Publications' },
+  { href: paths.demos, label: 'Demos' },
+  { href: paths.writing, label: 'Writing' },
+  { href: paths.people, label: 'People' },
+  { href: paths.internal, label: 'Internal' },
+];
+
+function isCurrent(href: string) {
+  const clean = href.replace(/\/$/, '') || '/';
+  if (clean === '/') return pathname === '/';
+  return pathname === clean || pathname.startsWith(`${clean}/`);
+}
+---
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href={paths.home}>
+      <img class="brand-logo for-light" src="/logos/logo-dark.png" alt="" width="36" height="36" />
+      <img class="brand-logo for-dark" src="/logos/logo-light.png" alt="" width="36" height="36" />
+      <span class="brand-text">Epsilon Prime</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav-actions">
+      <ThemeToggle />
+      <button type="button" class="menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    {
+      links.map((link) => (
+        <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById('menu-toggle');
+    const panel = document.getElementById('mobile-nav');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      const open = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>

@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { paths } from '../../lib/paths';
+
+const demos = (await getCollection('demos')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout title="Demos" description="Interactive demos from Epsilon Prime.">
+  <h1 class="page-title">Demos</h1>
+  <p class="page-intro">Interactive artifacts linked back to projects and papers.</p>
+  <div class="stack">
+    {
+      demos.map((demo) => (
+        <a class="list-item" href={paths.demo(demo.id)}>
+          <h3>{demo.data.title}</h3>
+          <p>{demo.data.summary}</p>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

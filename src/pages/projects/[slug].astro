@@ -1,0 +1,114 @@
+---
+import { getCollection, getEntries, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
+import { paths } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const people = await getEntries(project.data.people);
+const papers = await getEntries(project.data.papers);
+const demos = await getEntries(project.data.demos);
+const posts = await getEntries(project.data.posts);
+const primaryRepo = project.data.repos.find((r) => r.primary) ?? project.data.repos[0];
+---
+
+<BaseLayout title={project.data.title} description={project.data.summary}>
+  <p class="eyebrow">{project.data.status} project</p>
+  <h1 class="page-title">{project.data.title}</h1>
+  <p class="page-intro">{project.data.summary}</p>
+
+  <PlaceholderMedia label="Placeholder project figure" />
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  {
+    project.data.repos.length > 0 && (
+      <section class="panel">
+        <h2>Repositories</h2>
+        <div class="chip-row">
+          {project.data.repos.map((repo) => (
+            <a class="chip" href={repo.url} rel="noopener noreferrer">
+              {repo.label}
+              {repo.primary || repo === primaryRepo ? ' · primary' : ''}
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    people.length > 0 && (
+      <section class="panel">
+        <h2>People</h2>
+        <ul class="rel-list">
+          {people.map((person) => (
+            <li>
+              <a href={paths.person(person.id)}>
+                {person.data.name} · {person.data.role}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    papers.length > 0 && (
+      <section class="panel">
+        <h2>Papers</h2>
+        <ul class="rel-list">
+          {papers.map((paper) => (
+            <li>
+              <a href={paths.paper(paper.id)}>{paper.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    demos.length > 0 && (
+      <section class="panel">
+        <h2>Demos</h2>
+        <ul class="rel-list">
+          {demos.map((demo) => (
+            <li>
+              <a href={paths.demo(demo.id)}>{demo.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    posts.length > 0 && (
+      <section class="panel">
+        <h2>Blogs & tutorials</h2>
+        <ul class="rel-list">
+          {posts.map((post) => (
+            <li>
+              <a href={paths.post(post.id)}>
+                {post.data.title} <span class="meta">({post.data.type})</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>

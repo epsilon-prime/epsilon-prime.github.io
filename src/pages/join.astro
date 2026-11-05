@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { paths } from '../lib/paths';
+---
+
+<BaseLayout title="Join" description="Join Epsilon Prime Research.">
+  <h1 class="page-title">Join the lab</h1>
+  <p class="page-intro">
+    Placeholder recruiting page. Describe who you are looking for (undergrads, MS/PhD, postdocs), what
+    background helps, and how to apply.
+  </p>
+
+  <section class="panel">
+    <h2>What we look for</h2>
+    <p>
+      Interest in efficient ML systems, strong coding/math foundations, and curiosity about measuring
+      real compute/quality tradeoffs. Replace this with your real criteria.
+    </p>
+  </section>
+
+  <section class="panel">
+    <h2>How to apply</h2>
+    <p>
+      Email <a href="mailto:lab@example.com">lab@example.com</a> with a CV, a short note on interests, and
+      any relevant links (GitHub, papers, projects). Point applicants at
+      <a href={paths.projects}>current projects</a> and <a href={paths.people}>people</a>.
+    </p>
+  </section>
+</BaseLayout>

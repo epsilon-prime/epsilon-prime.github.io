@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
+import { paths } from '../../lib/paths';
+import { projectsForPerson } from '../../lib/relations';
+
+export async function getStaticPaths() {
+  const people = await getCollection('people');
+  return people.map((person) => ({
+    params: { slug: person.id },
+    props: { person },
+  }));
+}
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+const projects = await projectsForPerson(person.id);
+---
+
+<BaseLayout title={person.data.name} description={`${person.data.name} — ${person.data.role}`}>
+  <PlaceholderMedia ratio="avatar" label={`${person.data.name} photo placeholder`} />
+  <h1 class="page-title">{person.data.name}</h1>
+  <p class="page-intro meta">
+    {person.data.role}
+    {person.data.affiliation ? ` · ${person.data.affiliation}` : ''}
+  </p>
+
+  <div class="chip-row" style="margin-bottom: 1.25rem;">
+    {
+      person.data.email && (
+        <a class="chip" href={`mailto:${person.data.email}`}>
+          Email
+        </a>
+      )
+    }
+    {
+      person.data.website && (
+        <a class="chip" href={person.data.website} rel="noopener noreferrer">
+          Website
+        </a>
+      )
+    }
+    {
+      person.data.github && (
+        <a class="chip" href={person.data.github} rel="noopener noreferrer">
+          GitHub
+        </a>
+      )
+    }
+  </div>
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  {
+    projects.length > 0 && (
+      <section class="panel">
+        <h2>Projects</h2>
+        <ul class="rel-list">
+          {projects.map((project) => (
+            <li>
+              <a href={paths.project(project.id)}>{project.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>
