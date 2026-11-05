@@ -72,6 +72,7 @@ const people = defineCollection({
     name: z.string(),
     role: z.string(),
     affiliation: z.string().optional(),
+    photo: z.string().url().optional(),
     email: z.string().email().optional(),
     website: z.string().url().optional(),
     github: z.string().url().optional(),
@@ -83,7 +84,8 @@ const internal = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/internal' }),
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    linkLabel: z.string().optional(),
+    description: z.string().optional(),
     url: z.string().url(),
     category: z.string().default('General'),
   }),

@@ -23,7 +23,7 @@ Live: https://epsilon-prime.github.io/
 
 Copy an existing file in the same folder (e.g. `sparse-serve.md`, `routing-without-regret.md`) and change the slug + frontmatter.
 
-**IDs must match filenames.** Example: `people: [alex-prime]` ↔ `src/content/people/alex-prime.md`.
+**IDs must match filenames.** Example: `people: [aditya-desai]` ↔ `src/content/people/aditya-desai.md`.
 
 ### Minimal examples
 
@@ -35,7 +35,7 @@ title: My Project
 summary: One-line pitch.
 status: active          # active | completed | archived
 featured: false
-people: [alex-prime]
+people: [aditya-desai]
 repos:
   - label: Code
     url: https://github.com/org/repo
@@ -70,6 +70,7 @@ posts: []
 name: Jane Doe
 role: PhD Student
 affiliation: IIT Bombay
+photo: https://example.com/photo.jpg
 email: jane@example.com
 order: 10
 ---
@@ -80,12 +81,12 @@ Short bio.
 
 ```yaml
 ---
-title: Onboarding
-description: Lab handbook (SSO required).
+title: "Once you have a paper what to do next"
+linkLabel: "Life cycle of a paper"   # optional; renders as title: [linkLabel](url)
 url: https://docs.google.com/document/d/...
-category: Onboarding
 ---
 ```
+
 
 ## Local preview
 

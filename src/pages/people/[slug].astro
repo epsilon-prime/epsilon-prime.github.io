@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
+import PersonPhoto from '../../components/PersonPhoto.astro';
 import { paths } from '../../lib/paths';
 import { projectsForPerson } from '../../lib/relations';
 
@@ -19,7 +19,7 @@ const projects = await projectsForPerson(person.id);
 ---
 
 <BaseLayout title={person.data.name} description={`${person.data.name} — ${person.data.role}`}>
-  <PlaceholderMedia ratio="avatar" label={`${person.data.name} photo placeholder`} />
+  <PersonPhoto name={person.data.name} photo={person.data.photo} size="lg" />
   <h1 class="page-title">{person.data.name}</h1>
   <p class="page-intro meta">
     {person.data.role}
@@ -36,8 +36,8 @@ const projects = await projectsForPerson(person.id);
     }
     {
       person.data.website && (
-        <a class="chip" href={person.data.website} rel="noopener noreferrer">
-          Website
+        <a class="chip" href={person.data.website} rel="noopener noreferrer" target="_blank">
+          Personal page
         </a>
       )
     }

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
+import PersonPhoto from '../../components/PersonPhoto.astro';
 import { paths } from '../../lib/paths';
 
 const people = (await getCollection('people')).sort((a, b) => a.data.order - b.data.order);
@@ -16,12 +16,26 @@ const people = (await getCollection('people')).sort((a, b) => a.data.order - b.d
   <div class="grid-3">
     {
       people.map((person) => (
-        <a class="list-item" href={paths.person(person.id)}>
-          <PlaceholderMedia ratio="avatar" label={`${person.data.name} photo placeholder`} />
-          <h3>{person.data.name}</h3>
-          <p class="meta">{person.data.role}</p>
-          {person.data.affiliation && <p class="meta">{person.data.affiliation}</p>}
-        </a>
+        <div class="list-item person-card">
+          <a class="person-card-main" href={paths.person(person.id)}>
+            <PersonPhoto name={person.data.name} photo={person.data.photo} />
+            <h3>{person.data.name}</h3>
+            <p class="meta">{person.data.role}</p>
+            {person.data.affiliation && <p class="meta">{person.data.affiliation}</p>}
+          </a>
+          {
+            person.data.website && (
+              <a
+                class="person-external"
+                href={person.data.website}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Personal page
+              </a>
+            )
+          }
+        </div>
       ))
     }
   </div>

@@ -3,7 +3,7 @@ title: SparseServe
 summary: Token-budget aware inference for long-context models — less compute, same quality.
 status: active
 featured: true
-people: [alex-prime]
+people: [aditya-desai]
 repos:
   - label: Code
     url: https://github.com/epsilon-prime/sparse-serve

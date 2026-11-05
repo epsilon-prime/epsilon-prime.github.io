@@ -423,6 +423,30 @@ html[data-theme="dark"] .brand-logo.for-dark {
   font-size: 1.05rem;
 }
 
+.person-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.person-card-main {
+  color: inherit;
+  text-decoration: none;
+}
+
+.person-card-main:hover {
+  text-decoration: none;
+}
+
+.person-card-main h3 {
+  color: var(--fg);
+}
+
+.person-external {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .meta {
   color: var(--muted);
   font-size: 0.9rem;
@@ -472,6 +496,22 @@ html[data-theme="dark"] .brand-logo.for-dark {
     linear-gradient(145deg, color-mix(in srgb, var(--accent) 20%, var(--placeholder)), var(--placeholder));
   border: 1px solid var(--line);
   margin-bottom: 0.9rem;
+}
+
+.placeholder-avatar-lg,
+.person-photo-lg {
+  width: 8rem;
+  height: 8rem;
+}
+
+.person-photo {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  margin-bottom: 0.9rem;
+  background: var(--placeholder);
 }
 
 .chip-row {
@@ -531,6 +571,30 @@ html[data-theme="dark"] .brand-logo.for-dark {
 
 .rel-list a:hover {
   color: var(--accent);
+}
+
+.internal-list {
+  gap: 0.85rem;
+  font-size: 1.05rem;
+  color: var(--fg);
+}
+
+.internal-list a {
+  color: var(--accent);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+
+.internal-list a:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.internal-list a::after {
+  content: " ↗";
+  font-weight: 500;
+  font-size: 0.9em;
 }
 
 .note {

@@ -1,0 +1,17 @@
+---
+interface Props {
+  name: string;
+  photo?: string;
+  size?: 'sm' | 'lg';
+}
+const { name, photo, size = 'sm' } = Astro.props;
+const className = size === 'lg' ? 'person-photo person-photo-lg' : 'person-photo';
+---
+
+{
+  photo ? (
+    <img class={className} src={photo} alt={name} width="160" height="160" loading="lazy" />
+  ) : (
+    <div class={`placeholder-avatar ${size === 'lg' ? 'placeholder-avatar-lg' : ''}`} role="img" aria-label={`${name} photo placeholder`} />
+  )
+}
