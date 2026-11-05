@@ -1,54 +1,102 @@
 # Epsilon Prime Research
 
-Lab website for **Epsilon Prime Research** (AI efficiency), built with [Astro](https://astro.build) and deployed to GitHub Pages.
+Static lab site (Astro → GitHub Pages). Content lives in Markdown under `src/content/`. The filename (without `.md`) is the **slug / ID** used in links.
 
-Live (once Pages is enabled): https://epsilon-prime.github.io/
+Live: https://epsilon-prime.github.io/
 
-## Quick start
+## Where to edit
 
-> **Note:** `npm install` on a Google Drive path often fails (file locks). Prefer a local clone, e.g. `%USERPROFILE%\dev\epsilon-prime.github.io`, for install/dev/build. Keep editing content in git; `node_modules` stays local (gitignored).
+| Add… | Create / edit this file | Also update (cross-links) |
+|------|-------------------------|---------------------------|
+| **Project** | `src/content/projects/<slug>.md` | On related paper/demo/post files: add `projects: [<slug>]`. List people/papers/demos/posts in the project frontmatter. |
+| **Paper** | `src/content/papers/<slug>.md` | Project: `papers: [<slug>]`. Paper: `projects`, `demos`, `posts`. |
+| **Demo** | `src/content/demos/<slug>.md` | Project: `demos: [<slug>]`. Demo: `projects`, `papers`, `posts`. |
+| **Blog / tutorial** | `src/content/posts/<slug>.md` (`type: blog` or `tutorial`) | Project: `posts: [<slug>]`. Post: `projects`, `papers`, `demos`. |
+| **Person** | `src/content/people/<slug>.md` | Projects that include them: `people: [<slug>]`. |
+| **Internal doc** | `src/content/internal/<slug>.md` | Nothing else — just title, description, `url`, `category`. |
+| **Join / contact copy** | `src/pages/join.astro`, `src/components/Footer.astro` | — |
+| **Home featured blurb** | `src/pages/index.astro` (layout) + set `featured: true` on a project | — |
+| **Theme / colors** | `src/styles/global.css` | — |
+| **Logos** | `assets/` and `public/logos/` (`logo-dark.png` → light UI, `logo-light.png` → dark UI) | — |
+| **Nav labels** | `src/components/Header.astro` | — |
+| **Field schemas** | `src/content.config.ts` | Only if you add new frontmatter fields |
+
+Copy an existing file in the same folder (e.g. `sparse-serve.md`, `routing-without-regret.md`) and change the slug + frontmatter.
+
+**IDs must match filenames.** Example: `people: [alex-prime]` ↔ `src/content/people/alex-prime.md`.
+
+### Minimal examples
+
+**Project** → `src/content/projects/my-project.md`
+
+```yaml
+---
+title: My Project
+summary: One-line pitch.
+status: active          # active | completed | archived
+featured: false
+people: [alex-prime]
+repos:
+  - label: Code
+    url: https://github.com/org/repo
+    primary: true
+papers: [my-paper]
+demos: []
+posts: []
+---
+Body text here.
+```
+
+**Paper** → `src/content/papers/my-paper.md`
+
+```yaml
+---
+title: Paper Title
+authors: [Name One, Name Two]
+venue: Venue 2026
+year: 2026
+abstract: Short abstract.
+pdfUrl: https://arxiv.org/abs/...
+projects: [my-project]
+demos: []
+posts: []
+---
+```
+
+**Person** → `src/content/people/jane-doe.md`
+
+```yaml
+---
+name: Jane Doe
+role: PhD Student
+affiliation: IIT Bombay
+email: jane@example.com
+order: 10
+---
+Short bio.
+```
+
+**Internal (IITB SSO Google Doc)** → `src/content/internal/onboarding.md`
+
+```yaml
+---
+title: Onboarding
+description: Lab handbook (SSO required).
+url: https://docs.google.com/document/d/...
+category: Onboarding
+---
+```
+
+## Local preview
+
+Prefer a **local** clone for `npm install` (Google Drive often breaks `node_modules`):
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build: `npm run build` · Preview: `npm run preview`
-
-## Theme
-
-Signal Teal lives in [`src/styles/global.css`](src/styles/global.css) as CSS variables (`--bg`, `--fg`, `--accent`, …). Light/dark toggle stores preference in `localStorage`. Logos:
-
-- Light UI: `public/logos/logo-dark.png` (filename is the asset name; pairing is intentional)
-- Dark UI: `public/logos/logo-light.png`
-
-Source copies also sit in `assets/`.
-
-## Content model
-
-Markdown collections under `src/content/`:
-
-| Folder | Becomes |
-|--------|---------|
-| `projects/` | `/projects/<slug>/` |
-| `papers/` | `/publications/<slug>/` |
-| `demos/` | `/demos/<slug>/` |
-| `posts/` | `/writing/<slug>/` (`type: blog` or `tutorial`) |
-| `people/` | `/people/<slug>/` |
-| `internal/` | listed on `/internal/` (outbound Google Doc links) |
-
-Cross-links use frontmatter IDs (e.g. `papers: [routing-without-regret]`). Detail pages resolve those to the placeholder pages so the graph is reviewable end-to-end.
-
-### Add a project
-
-1. Create `src/content/projects/my-project.md`
-2. Fill title, summary, people/papers/demos/posts IDs, repos
-3. Add matching entries in other collections as needed
-
-### Internal (IITB SSO)
-
-`src/content/internal/*.md` only stores title, description, category, and a Google Doc/Drive URL. Access control stays on Google — no site login.
-
 ## Deploy
 
-Push to `main`. GitHub Action [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and publishes. In the repo settings, set Pages source to **GitHub Actions**.
+Push to `main`. Workflow: `.github/workflows/deploy.yml`.  
+Repo → **Settings → Pages → Source → GitHub Actions**.
