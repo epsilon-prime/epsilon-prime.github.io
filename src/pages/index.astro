@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PlaceholderMedia from '../components/PlaceholderMedia.astro';
 import { paths } from '../lib/paths';
 
 const projects = (await getCollection('projects'))
@@ -15,26 +14,29 @@ const posts = (await getCollection('posts'))
 
 <BaseLayout title="Epsilon Prime Research" description="AI efficiency research lab — Epsilon Prime Research.">
   <section class="hero">
-    <p class="hero-kicker">AI efficiency research</p>
-    <h1>Epsilon Prime Research</h1>
-    <p class="hero-lede">
-      Intelligence That Matters. At the Right Cost. At the Right Latency.
-    </p>
-    <div class="btn-row">
-      <a class="btn btn-primary" href={paths.projects}>View projects</a>
-      <a class="btn btn-ghost" href={paths.join}>Join the lab</a>
+    <div class="hero-copy">
+      <p class="hero-kicker">AI efficiency research</p>
+      <h1>Epsilon Prime Research</h1>
+      <p class="hero-lede">
+        Intelligence That Matters. At the Right Cost. At the Right Latency.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={paths.projects}>View projects</a>
+        <a class="btn btn-ghost" href={paths.join}>Join the lab</a>
+      </div>
+    </div>
+    <div class="hero-logo" aria-hidden="true">
+      <img class="hero-logo-img for-light" src="/logos/logo-dark.png" alt="" width="280" height="280" />
+      <img class="hero-logo-img for-dark" src="/logos/logo-light.png" alt="" width="280" height="280" />
     </div>
   </section>
 
-  <section class="section grid-2">
-    <div>
-      <PlaceholderMedia label="Placeholder lab / project image" />
+  <section class="section">
+    <div class="section-head">
+      <h2>Featured project</h2>
+      <a href={paths.projects}>All projects</a>
     </div>
     <div class="stack">
-      <div class="section-head">
-        <h2>Featured project</h2>
-        <a href={paths.projects}>All projects</a>
-      </div>
       {
         projects.map((project) => (
           <a class="list-item" href={paths.project(project.id)}>

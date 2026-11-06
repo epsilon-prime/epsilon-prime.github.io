@@ -279,12 +279,22 @@ html[data-theme="dark"] .brand-logo.for-dark {
 }
 
 .hero {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
   background: var(--hero-wash);
   border: 1px solid var(--line);
   border-radius: calc(var(--radius) + 4px);
   padding: clamp(1.75rem, 4vw, 3rem);
   margin-bottom: 2.5rem;
   box-shadow: var(--shadow);
+}
+
+@media (min-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(10rem, 0.7fr);
+    gap: 2rem;
+  }
 }
 
 .hero-kicker {
@@ -303,9 +313,45 @@ html[data-theme="dark"] .brand-logo.for-dark {
 }
 
 .hero-lede {
-  max-width: 42rem;
+  max-width: 36rem;
   font-size: 1.08rem;
   margin-bottom: 1.4rem;
+}
+
+.hero-logo {
+  justify-self: center;
+  width: min(100%, 16rem);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+@media (min-width: 800px) {
+  .hero-logo {
+    justify-self: end;
+    width: min(100%, 18rem);
+  }
+}
+
+.hero-logo-img {
+  width: 100%;
+  height: auto;
+}
+
+.hero-logo-img.for-light {
+  display: block;
+}
+
+.hero-logo-img.for-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .hero-logo-img.for-light {
+  display: none;
+}
+
+html[data-theme="dark"] .hero-logo-img.for-dark {
+  display: block;
 }
 
 .btn-row {
