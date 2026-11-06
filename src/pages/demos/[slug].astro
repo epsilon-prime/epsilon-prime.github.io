@@ -1,7 +1,6 @@
 ---
 import { getCollection, getEntries, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
 import { paths } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -23,8 +22,6 @@ const posts = await getEntries(demo.data.posts);
   <p class="eyebrow">Demo</p>
   <h1 class="page-title">{demo.data.title}</h1>
   <p class="page-intro">{demo.data.summary}</p>
-
-  <PlaceholderMedia label="Placeholder demo embed / screenshot" />
 
   {
     demo.data.demoUrl && (

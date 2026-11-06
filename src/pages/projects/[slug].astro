@@ -1,8 +1,8 @@
 ---
 import { getCollection, getEntries, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PlaceholderMedia from '../../components/PlaceholderMedia.astro';
 import { paths } from '../../lib/paths';
+import { papersForProject } from '../../lib/relations';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -15,7 +15,11 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const people = await getEntries(project.data.people);
-const papers = await getEntries(project.data.papers);
+const linkedPapers = await getEntries(project.data.papers);
+const reversePapers = await papersForProject(project.id);
+const papers = [...new Map([...linkedPapers, ...reversePapers].map((p) => [p.id, p])).values()].sort(
+  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0) || a.data.title.localeCompare(b.data.title),
+);
 const demos = await getEntries(project.data.demos);
 const posts = await getEntries(project.data.posts);
 const primaryRepo = project.data.repos.find((r) => r.primary) ?? project.data.repos[0];
@@ -25,8 +29,6 @@ const primaryRepo = project.data.repos.find((r) => r.primary) ?? project.data.re
   <p class="eyebrow">{project.data.status} project</p>
   <h1 class="page-title">{project.data.title}</h1>
   <p class="page-intro">{project.data.summary}</p>
-
-  <PlaceholderMedia label="Placeholder project figure" />
 
   <div class="prose">
     <Content />

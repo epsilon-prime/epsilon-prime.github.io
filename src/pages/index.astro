@@ -6,7 +6,9 @@ import { paths } from '../lib/paths';
 const projects = (await getCollection('projects'))
   .filter((p) => p.data.featured)
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
-const papers = (await getCollection('papers')).sort((a, b) => b.data.year - a.data.year).slice(0, 3);
+const papers = (await getCollection('papers'))
+  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0))
+  .slice(0, 3);
 const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
@@ -60,8 +62,7 @@ const posts = (await getCollection('posts'))
           <a class="list-item" href={paths.paper(paper.id)}>
             <h3>{paper.data.title}</h3>
             <p class="meta">
-              {paper.data.venue ? `${paper.data.venue} · ` : ''}
-              {paper.data.year}
+              {[paper.data.venue, paper.data.year].filter((x) => x != null && x !== '').join(' · ')}
             </p>
           </a>
         ))

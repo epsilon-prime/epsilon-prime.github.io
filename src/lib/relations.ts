@@ -10,6 +10,11 @@ export async function projectsForPaper(paperId: string) {
   return projects.filter((p) => p.data.papers.some((ref) => ref.id === paperId));
 }
 
+export async function papersForProject(projectId: string) {
+  const papers = await getCollection('papers');
+  return papers.filter((p) => p.data.projects.some((ref) => ref.id === projectId));
+}
+
 export function resolveRefs<T extends { id: string }>(
   refs: { id: string }[],
   entries: T[],

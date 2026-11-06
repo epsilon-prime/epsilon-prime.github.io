@@ -8,7 +8,7 @@ const demos = (await getCollection('demos')).sort((a, b) => a.data.title.localeC
 
 <BaseLayout title="Demos" description="Interactive demos from Epsilon Prime.">
   <h1 class="page-title">Demos</h1>
-  <p class="page-intro">Interactive artifacts linked back to projects and papers.</p>
+  <p class="page-intro">Interactive demos related to our research.</p>
   <div class="stack">
     {
       demos.map((demo) => (

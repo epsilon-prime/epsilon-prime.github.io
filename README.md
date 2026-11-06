@@ -21,7 +21,7 @@ Live: https://epsilon-prime.github.io/
 | **Nav labels** | `src/components/Header.astro` | — |
 | **Field schemas** | `src/content.config.ts` | Only if you add new frontmatter fields |
 
-Copy an existing file in the same folder (e.g. `sparse-serve.md`, `routing-without-regret.md`) and change the slug + frontmatter.
+Copy an existing file in the same folder (e.g. `epsilon-engine.md`) and change the slug + frontmatter.
 
 **IDs must match filenames.** Example: `people: [aditya-desai]` ↔ `src/content/people/aditya-desai.md`.
 
