@@ -12,6 +12,7 @@ authors:
   - "Graham Neubig"
   - "Joseph E. Gonzalez"
 year: 2026
+scholarOrder: 9
 projects: []
 demos: []
 posts: []

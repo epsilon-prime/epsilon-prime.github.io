@@ -13,6 +13,7 @@ authors:
   - "Joseph E. Gonzalez"
 venue: "arXiv preprint"
 year: 2025
+scholarOrder: 15
 pdfUrl: https://arxiv.org/abs/2502.03771
 projects: [epsilon-engine, epsilon-edge]
 demos: []

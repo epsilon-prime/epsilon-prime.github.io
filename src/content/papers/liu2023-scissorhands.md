@@ -11,6 +11,7 @@ authors:
   - "Anshumali Shrivastava"
 venue: "NeurIPS 2023"
 year: 2023
+scholarOrder: 23
 projects: [epsilon-engine, epsilon-edge]
 demos: []
 posts: []

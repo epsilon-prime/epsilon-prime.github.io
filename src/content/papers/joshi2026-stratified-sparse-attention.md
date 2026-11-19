@@ -11,6 +11,7 @@ authors:
   - "Kumar Krishna Agrawal"
 venue: "arXiv preprint"
 year: 2026
+scholarOrder: 3
 pdfUrl: https://arxiv.org/abs/2610.28441
 projects: [epsilon-engine, epsilon-edge]
 demos: []

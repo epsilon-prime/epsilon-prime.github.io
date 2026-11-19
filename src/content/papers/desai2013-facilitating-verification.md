@@ -6,6 +6,7 @@ authors:
   - "Subhajit Roy"
 venue: "APSEC 2013"
 year: 2013
+scholarOrder: 34
 projects: []
 demos: []
 posts: []

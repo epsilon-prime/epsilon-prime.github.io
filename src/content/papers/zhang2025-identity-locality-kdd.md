@@ -7,6 +7,7 @@ authors:
   - "Anshumali Shrivastava"
 venue: "KDD 2025"
 year: 2025
+scholarOrder: 13
 projects: []
 demos: []
 posts: []

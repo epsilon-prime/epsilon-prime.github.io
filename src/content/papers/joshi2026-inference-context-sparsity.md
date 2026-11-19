@@ -11,6 +11,7 @@ authors:
   - "Aditya Desai"
 venue: "arXiv preprint"
 year: 2026
+scholarOrder: 5
 pdfUrl: https://arxiv.org/abs/2605.24168
 projects: [epsilon-engine, epsilon-edge]
 demos: []
