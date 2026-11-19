@@ -13,6 +13,7 @@ authors:
   - "Joseph E. Gonzalez"
 venue: "ICLR 2026"
 year: 2026
+scholarOrder: 6
 projects: [epsilon-engine, epsilon-edge]
 demos: []
 posts: []

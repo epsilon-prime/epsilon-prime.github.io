@@ -9,6 +9,7 @@ authors:
   - "Aditya Desai"
 venue: "arXiv preprint"
 year: 2026
+scholarOrder: 4
 pdfUrl: https://arxiv.org/abs/2610.11458
 projects: [research-engineer]
 demos: []

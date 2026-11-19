@@ -14,6 +14,7 @@ Live: https://epsilon-prime.github.io/
 | **Blog / tutorial** | `src/content/posts/<slug>.md` (`type: blog` or `tutorial`) | Project: `posts: [<slug>]`. Post: `projects`, `papers`, `demos`. |
 | **Person** | `src/content/people/<slug>.md` | Projects that include them: `people: [<slug>]`. |
 | **Internal doc** | `src/content/internal/<slug>.md` | Nothing else — just title, description, `url`, `category`. |
+| **News (home)** | `src/content/news/<slug>.md` | Delete the file to remove an old update. Home shows all entries, newest first (`pinned: true` stays on top). |
 | **Join / contact copy** | `src/pages/join.astro`, `src/components/Footer.astro` | — |
 | **Home featured blurb** | `src/pages/index.astro` (layout) + set `featured: true` on a project | — |
 | **Theme / colors** | `src/styles/global.css` | — |
@@ -55,6 +56,7 @@ title: Paper Title
 authors: [Name One, Name Two]
 venue: Venue 2026
 year: 2026
+scholarOrder: 1   # Google Scholar pubdate rank (1 = newest); drives list order
 abstract: Short abstract.
 pdfUrl: https://arxiv.org/abs/...
 projects: [my-project]
@@ -62,6 +64,7 @@ demos: []
 posts: []
 ---
 ```
+
 
 **Person** → `src/content/people/jane-doe.md`
 
@@ -86,6 +89,20 @@ linkLabel: "Life cycle of a paper"   # optional; renders as title: [linkLabel](u
 url: https://docs.google.com/document/d/...
 ---
 ```
+
+**News (home)** → `src/content/news/2026-my-update.md`
+
+```yaml
+---
+title: "Short headline"
+summary: "One or two sentences."
+date: 2026-11-19
+url: https://example.com/optional-link   # or /publications/
+pinned: false
+---
+```
+
+Delete the Markdown file to remove that news item from the home page.
 
 
 ## Local preview

@@ -11,6 +11,7 @@ authors:
   - "Ion Stoica"
 venue: "arXiv preprint"
 year: 2025
+scholarOrder: 12
 pdfUrl: https://arxiv.org/abs/2510.05688
 projects: []
 demos: []

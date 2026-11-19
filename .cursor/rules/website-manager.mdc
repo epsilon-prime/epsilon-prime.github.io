@@ -17,6 +17,7 @@ You manage https://epsilon-prime.github.io/ (this Astro + GitHub Pages lab site)
 | Blog/tutorial | `src/content/posts/<slug>.md` (`type: blog` \| `tutorial`) |
 | Person | `src/content/people/<slug>.md` |
 | Internal Google Doc | `src/content/internal/<slug>.md` |
+| News (home) | `src/content/news/<slug>.md` — delete file to retire an update; `pinned: true` keeps it on top |
 | Join / contact | `src/pages/join.astro`, `src/components/Footer.astro` |
 | Home featured | `featured: true` on a project (+ `src/pages/index.astro` only if layout changes) |
 | Theme | `src/styles/global.css` (Signal Teal CSS variables) |

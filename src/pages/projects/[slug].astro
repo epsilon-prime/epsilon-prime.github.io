@@ -3,6 +3,7 @@ import { getCollection, getEntries, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { paths } from '../../lib/paths';
 import { papersForProject } from '../../lib/relations';
+import { sortPapersByDateDesc } from '../../lib/papers';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -17,9 +18,9 @@ const { Content } = await render(project);
 const people = await getEntries(project.data.people);
 const linkedPapers = await getEntries(project.data.papers);
 const reversePapers = await papersForProject(project.id);
-const papers = [...new Map([...linkedPapers, ...reversePapers].map((p) => [p.id, p])).values()].sort(
-  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0) || a.data.title.localeCompare(b.data.title),
-);
+const papers = sortPapersByDateDesc([
+  ...new Map([...linkedPapers, ...reversePapers].map((p) => [p.id, p])).values(),
+]);
 const demos = await getEntries(project.data.demos);
 const posts = await getEntries(project.data.posts);
 const primaryRepo = project.data.repos.find((r) => r.primary) ?? project.data.repos[0];

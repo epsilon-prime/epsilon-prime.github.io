@@ -7,6 +7,7 @@ authors:
   - "Anshumali Shrivastava"
 venue: "SIGMOD 2021"
 year: 2021
+scholarOrder: 29
 projects: []
 demos: []
 posts: []

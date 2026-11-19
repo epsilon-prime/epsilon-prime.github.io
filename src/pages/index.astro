@@ -2,16 +2,29 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { paths } from '../lib/paths';
+import { sortPapersByDateDesc } from '../lib/papers';
 
+const news = (await getCollection('news')).sort((a, b) => {
+  if (a.data.pinned !== b.data.pinned) return a.data.pinned ? -1 : 1;
+  return b.data.date.valueOf() - a.data.date.valueOf();
+});
 const projects = (await getCollection('projects'))
   .filter((p) => p.data.featured)
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
-const papers = (await getCollection('papers'))
-  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0))
-  .slice(0, 3);
+const papers = sortPapersByDateDesc(await getCollection('papers')).slice(0, 3);
 const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
+
+function newsHref(url?: string) {
+  if (!url) return undefined;
+  if (url.startsWith('/')) return url;
+  return url;
+}
+
+function isExternal(url?: string) {
+  return !!url && /^https?:\/\//i.test(url);
+}
 ---
 
 <BaseLayout title="Epsilon Prime Research" description="AI efficiency research lab — Epsilon Prime Research.">
@@ -32,6 +45,46 @@ const posts = (await getCollection('posts'))
       <img class="hero-logo-img for-dark" src="/logos/logo-light.png" alt="" width="280" height="280" />
     </div>
   </section>
+
+  {
+    news.length > 0 && (
+      <section class="section">
+        <div class="section-head">
+          <h2>News</h2>
+        </div>
+        <div class="stack">
+          {news.map((item) => {
+            const href = newsHref(item.data.url);
+            const dateLabel = item.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            });
+            const body = (
+              <>
+                <span class="eyebrow">{dateLabel}</span>
+                <h3>{item.data.title}</h3>
+                <p>{item.data.summary}</p>
+              </>
+            );
+            return href ? (
+              <a
+                class="list-item"
+                href={href}
+                {...(isExternal(item.data.url)
+                  ? { rel: 'noopener noreferrer', target: '_blank' }
+                  : {})}
+              >
+                {body}
+              </a>
+            ) : (
+              <div class="list-item">{body}</div>
+            );
+          })}
+        </div>
+      </section>
+    )
+  }
 
   <section class="section">
     <div class="section-head">
@@ -70,21 +123,23 @@ const posts = (await getCollection('posts'))
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Writing</h2>
-      <a href={paths.writing}>Blogs & tutorials</a>
-    </div>
-    <div class="grid-3">
-      {
-        posts.map((post) => (
-          <a class="list-item" href={paths.post(post.id)}>
-            <span class="eyebrow">{post.data.type}</span>
-            <h3>{post.data.title}</h3>
-            <p>{post.data.summary}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  {
+    posts.length > 0 && (
+      <section class="section">
+        <div class="section-head">
+          <h2>Writing</h2>
+          <a href={paths.writing}>Blogs & tutorials</a>
+        </div>
+        <div class="grid-3">
+          {posts.map((post) => (
+            <a class="list-item" href={paths.post(post.id)}>
+              <span class="eyebrow">{post.data.type}</span>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.summary}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

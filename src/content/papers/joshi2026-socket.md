@@ -11,6 +11,7 @@ authors:
   - "Anshumali Shrivastava"
 venue: "arXiv preprint"
 year: 2026
+scholarOrder: 8
 pdfUrl: https://arxiv.org/abs/2602.06283
 projects: [epsilon-engine, epsilon-edge]
 demos: []

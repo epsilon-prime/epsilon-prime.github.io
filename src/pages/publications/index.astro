@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { paths } from '../../lib/paths';
+import { sortPapersByDateDesc } from '../../lib/papers';
 
-const papers = (await getCollection('papers')).sort(
-  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0) || a.data.title.localeCompare(b.data.title),
-);
+const papers = sortPapersByDateDesc(await getCollection('papers'));
 ---
 
 <BaseLayout title="Publications" description="Papers from Epsilon Prime Research.">

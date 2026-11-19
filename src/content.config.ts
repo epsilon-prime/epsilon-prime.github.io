@@ -31,6 +31,10 @@ const papers = defineCollection({
     authors: z.array(z.string()),
     venue: z.string().optional(),
     year: z.number().optional(),
+    /** Optional precise date for sorting when there is no Scholar/arXiv signal. */
+    date: z.coerce.date().optional(),
+    /** Google Scholar pubdate rank (1 = newest). Preferred for list order. */
+    scholarOrder: z.number().int().positive().optional(),
     abstract: z.string().default(''),
     pdfUrl: z.string().url().optional(),
     doiUrl: z.string().url().optional(),
@@ -91,4 +95,20 @@ const internal = defineCollection({
   }),
 });
 
-export const collections = { projects, papers, demos, posts, people, internal };
+const news = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    url: z
+      .string()
+      .refine((v) => v.startsWith('/') || /^https?:\/\//i.test(v), {
+        message: 'Must be an absolute http(s) URL or a site path starting with /',
+      })
+      .optional(),
+    pinned: z.boolean().default(false),
+  }),
+});
+
+export const collections = { projects, papers, demos, posts, people, internal, news };

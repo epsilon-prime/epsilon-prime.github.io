@@ -14,6 +14,7 @@ authors:
   - "et al."
 venue: "arXiv preprint"
 year: 2025
+scholarOrder: 10
 pdfUrl: https://arxiv.org/abs/2512.14806
 projects: [research-engineer]
 demos: []

@@ -11,6 +11,7 @@ authors:
   - "Ion Stoica"
 venue: "ICLR 2026"
 year: 2026
+scholarOrder: 7
 projects: [epsilon-engine, epsilon-edge]
 demos: []
 posts: []
